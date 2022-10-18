@@ -10,3 +10,32 @@ stages:
     - path: data/mtcars.parquet
       md5: 77cf29accf9535522fad7db1486eff9a
       size: 6243
+  download:
+    cmd: stages/01_download.sh
+    deps:
+    - path: stages/01_download.sh
+      md5: 0300f721b46f955ab7d29631917e660d
+      size: 627
+    outs:
+    - path: download
+      md5: 393624e2f6c9d858041f11168caa7601.dir
+      size: 118798806
+      nfiles: 1
+  build:
+    cmd: stages/02_unzip_build.sh
+    deps:
+    - path: download
+      md5: 93800543c2b7b5b356be95a719751095.dir
+      size: 708983578
+      nfiles: 1
+    - path: stages/02_unzip_build.sh
+      md5: 665e6374298e857c1a93b545d5561de6
+      size: 515
+    - path: stages/sdf2parquet.py
+      md5: 08afc83d21f324fed840463c3aa99c6b
+      size: 1390
+    outs:
+    - path: brick
+      md5: 15e301e1c5738db1d1edf98230d1fbfa.dir
+      size: 85814236
+      nfiles: 1

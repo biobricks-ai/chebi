@@ -20,7 +20,9 @@ echo "gz path: $gzfile"
 # Unzip file
 gunzip $downloadpath/$gzfile
 echo "Unzip done"
-cd ..
+cd ../stages
 
 # convert to parquet
-python sdf2parquet.py $downloadpath/ ./brick/chebi.parquet
+file=${gzfile%.gz}
+mkdir -p $localpath/brick
+python sdf2parquet.py $downloadpath/$file $localpath/brick/chebi.parquet
