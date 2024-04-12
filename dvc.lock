@@ -1,41 +1,32 @@
+---
 schema: '2.0'
 stages:
-  1-stage:
-    cmd: Rscript stages/01-stage.R
-    deps:
-    - path: stages/01-stage.R
-      md5: c468dc14527e00c339f146e1dba2bd3b
-      size: 118
-    outs:
-    - path: data/mtcars.parquet
-      md5: 77cf29accf9535522fad7db1486eff9a
-      size: 6243
-  download:
-    cmd: stages/01_download.sh
-    deps:
-    - path: stages/01_download.sh
-      md5: 0300f721b46f955ab7d29631917e660d
-      size: 627
-    outs:
-    - path: download
-      md5: 393624e2f6c9d858041f11168caa7601.dir
-      size: 118798806
-      nfiles: 1
   build:
     cmd: stages/02_unzip_build.sh
     deps:
-    - path: download
-      md5: 93800543c2b7b5b356be95a719751095.dir
-      size: 708983578
+    - md5: 93800543c2b7b5b356be95a719751095.dir
       nfiles: 1
-    - path: stages/02_unzip_build.sh
-      md5: 665e6374298e857c1a93b545d5561de6
+      path: download
+      size: 708983578
+    - md5: 665e6374298e857c1a93b545d5561de6
+      path: stages/02_unzip_build.sh
       size: 515
-    - path: stages/sdf2parquet.py
-      md5: 08afc83d21f324fed840463c3aa99c6b
+    - md5: 08afc83d21f324fed840463c3aa99c6b
+      path: stages/sdf2parquet.py
       size: 1390
     outs:
-    - path: brick
-      md5: 15e301e1c5738db1d1edf98230d1fbfa.dir
-      size: 85814236
+    - md5: 15e301e1c5738db1d1edf98230d1fbfa.dir
       nfiles: 1
+      path: brick
+      size: 85814236
+  download:
+    cmd: stages/01_download.sh
+    deps:
+    - md5: 0300f721b46f955ab7d29631917e660d
+      path: stages/01_download.sh
+      size: 627
+    outs:
+    - md5: 393624e2f6c9d858041f11168caa7601.dir
+      nfiles: 1
+      path: download
+      size: 118798806
